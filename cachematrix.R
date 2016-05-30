@@ -1,0 +1,38 @@
+
+makeCacheMatrix <- function(x = matrix()) {
+  m<-NULL
+  set<-function(y){
+  x<<-y
+  m<<-NULL
+}
+get<-function() x
+setmatrix<-function(solve) m<<- solve
+getmatrix<-function() m
+list(set=set, get=get,
+   setmatrix=setmatrix,
+   getmatrix=getmatrix)
+}
+
+cacheSolve <- function(x=matrix(), ...) {
+    m<-x$getmatrix()
+    if(!is.null(m)){
+      message("getting cached data")
+      return(m)
+    }
+    datos<-x$get()
+    m<-solve(datos, ...)
+    x$setmatrix(m)
+    m
+}
+##  Added FUNCTION to Try Inverse Matrix
+trymatrix <-function(mydata = matrix()){
+
+        print("Inverse Matrix Created,Saved and retrieved from cache first time")
+        matdata <- makeCacheMatrix(mydata)
+        invdata <- cacheSolve(matdata)
+        invdata
+        print("Getting data from Cache directly")
+        invdata <-cacheSolve(matdata)
+        invdata
+        
+}
